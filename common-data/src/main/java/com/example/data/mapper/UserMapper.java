@@ -7,6 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+
     @Mapping(source = "name", target = "userName")
     @Mapping(source = "account", target = "userAccount")
     @Mapping(source = "email", target = "userEmail")
@@ -18,6 +19,6 @@ public interface UserMapper {
     @Mapping(target = "email", source = "userEmail")
     @Mapping(target = "avatar", source = "userAvatar")
     @Mapping(target = "password", source = "userPassword")
-    @Mapping(target = "authority", source = "authority")
+    @Mapping(target = "role", source = "authority")
     User toEnity(UserSignInRequest userSignInRequest);
 }

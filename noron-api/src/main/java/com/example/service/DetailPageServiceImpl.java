@@ -1,5 +1,8 @@
 package com.example.service;
 
+import com.example.data.request.PostRequest;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hm.social.tables.pojos.Comment;
 import com.hm.social.tables.pojos.Post;
 import com.hm.social.tables.pojos.Topic;
@@ -14,6 +17,7 @@ import com.example.data.response.PostResponse;
 import com.example.data.response.ShortCommentResponse;
 import com.example.data.response.UserResponse;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -43,8 +47,8 @@ public class DetailPageServiceImpl implements IDetailPageService {
     @Override
     public PostResponse getDetailPostById(Integer id) {
         Post post = postRepo.getPostById(id);
-        Topic topic = topicRepo.getTopicById(post.getTopicRelatedId());
-        User user = userRepo.getUserById(post.getUserOwnerId());
+        Topic topic = topicRepo.getTopicById(post.getTopicId());
+        User user = userRepo.getUserById(post.getUserId());
         UserResponse userResponse = userMapper.toDTO(user);
         PostResponse postResponse = postMapper.toDTO(post, topic,userResponse);
         return postResponse;
@@ -55,7 +59,7 @@ public class DetailPageServiceImpl implements IDetailPageService {
         List<Comment> commentList = commentRepo.getAllCommentByDate(postId);
         List<ShortCommentResponse> shortCommentResponseList= new ArrayList<>();
         for (Comment comment : commentList) {
-            User user = userRepo.getUserById(comment.getUserOwnerId());
+            User user = userRepo.getUserById(comment.getCommentuserId());
             UserResponse userResponse = userMapper.toDTO(user);
             shortCommentResponseList.add(shortCommentMapper.toDTO(comment, userResponse));
         }
@@ -68,7 +72,7 @@ public class DetailPageServiceImpl implements IDetailPageService {
         List<Comment> commentList = commentRepo.getAllCommentsByCommon(postId);
         List<ShortCommentResponse> shortCommentResponseList= new ArrayList<>();
         for (Comment comment : commentList) {
-            User user = userRepo.getUserById(comment.getUserOwnerId());
+            User user = userRepo.getUserById(comment.getCommentuserId());
             UserResponse userResponse = userMapper.toDTO(user);
             shortCommentResponseList.add(shortCommentMapper.toDTO(comment, userResponse));
         }
@@ -93,8 +97,14 @@ public class DetailPageServiceImpl implements IDetailPageService {
        return shortCommentMapper.toDTO(comment,userResponse);
     }
     @Override
-    @KafkaListener(topics="test1",groupId="user")
-    public void increasenumView(String postId){
-        postRepo.increasenumView(Integer.parseInt(postId));
+    public PostResponse insertPost(PostRequest postRequest) {
+        Post post =postMapper.toEnity(postRequest);
+        Post post1=postRepo.insertPost(post);
+        User user=userRepo.getUserById(post1.getUserId());
+        UserResponse userResponse=userMapper.toDTO(user);
+        Topic topic=topicRepo.getTopicById(post1.getTopicId());
+        PostResponse postResponse=postMapper.toDTO(post1,topic,userResponse);
+       return postResponse;
     }
+
 }

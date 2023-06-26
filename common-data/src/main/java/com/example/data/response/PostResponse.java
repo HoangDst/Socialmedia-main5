@@ -10,10 +10,13 @@ import java.time.LocalDateTime;
 public class PostResponse {
     private String title;
     private String content;
-    private UserResponse userResponse;
+    private UserResponse userResponse; // bo
+    private UserResponse user;
     private Integer numComment;
     private String topic;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;
+    private Integer topicId;
+
 }

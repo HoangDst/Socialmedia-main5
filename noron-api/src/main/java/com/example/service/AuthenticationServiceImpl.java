@@ -54,7 +54,7 @@ public class AuthenticationServiceImpl implements IAuthenticationService{
     }
 
     @Override
-    public boolean insertUSer(UserSignInAndUpdateRequest userSignInAndUpdateRequest) {
+    public boolean insertUSer(UserSignInRequest userSignInAndUpdateRequest) {
         User user= userMapper.toEnity(userSignInAndUpdateRequest);
         boolean insertUser = userRepo.insertUser(user);
         return insertUser;

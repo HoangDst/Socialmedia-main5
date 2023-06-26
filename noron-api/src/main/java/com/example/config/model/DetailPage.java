@@ -1,4 +1,4 @@
-package com.example.controller.model;
+package com.example.config.model;
 
 import com.example.data.response.PostResponse;
 import com.example.data.response.ShortCommentResponse;

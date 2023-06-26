@@ -57,10 +57,10 @@ public class SecurityConfig {
         return http.cors((cor)-> cor.disable())
                 .csrf((csrf)-> csrf.disable())
                 .authorizeHttpRequests((authorize)->
-                        authorize.requestMatchers("/authenticate/**")
-                                .permitAll()
+                        authorize
                                 .anyRequest()
-                                .hasAnyAuthority("user","admin")
+                                .permitAll()
+
                 )
 
                 .sessionManagement((sessionManagement)

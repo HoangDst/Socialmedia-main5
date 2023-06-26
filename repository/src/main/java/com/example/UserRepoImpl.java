@@ -5,6 +5,7 @@ import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Repository
 public class UserRepoImpl implements IUserRepo {
@@ -18,17 +19,25 @@ public class UserRepoImpl implements IUserRepo {
 
     @Override
     public User getUserById(Integer id) {
-        return dslContext.selectOne()
+        return dslContext.select()
                 .from(users)
                 .where(users.ID.eq(id))
                 .fetchOneInto(User.class);
     }
+    @Override
+    public List<User> getUserByIds(List<Integer> ids) {
+        return dslContext.select()
+                .from(users)
+                .where(users.ID.in(ids))
+                .fetchInto(User.class);
+    }
 
     @Override
     public boolean insertUser(User user) {
-        return dslContext.insertInto(users, users.ACCOUNT, users.NAME, users.CREATED_AT
-                        , users.PASSWORD, users.EMAIL
-                        , users.AVATAR, users.ROLE)
+        return dslContext.insertInto(users,
+                        users.ACCOUNT, users.NAME, users.CREATED_AT,
+                        users.PASSWORD, users.EMAIL,
+                        users.AVATAR, users.ROLE)
                 .values(user.getAccount(), user.getName(), LocalDateTime.now(),
                         user.getPassword(), user.getEmail(), user.getAvatar(), user.getRole())
                 .returning(users.ID)

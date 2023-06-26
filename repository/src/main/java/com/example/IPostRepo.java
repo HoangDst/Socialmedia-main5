@@ -1,6 +1,7 @@
 package com.example;
 
 import com.hm.social.tables.pojos.Post;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.List;
 
@@ -15,5 +16,8 @@ public interface IPostRepo {
     public Post updatePost(Post post, Integer id);
     public Post deletePost (Integer id);
     public List<Post> getRandPostByTopic(Integer topicId);
+    public void increasenumView(Integer postId);
 
+
+    void increasenumView(Integer postId, Long numView);
 }

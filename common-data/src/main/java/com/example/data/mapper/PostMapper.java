@@ -1,40 +1,40 @@
 package com.example.data.mapper;
 
-import com.hm.social.tables.pojos.Post;
-import com.hm.social.tables.pojos.Topic;
 import com.example.data.request.PostRequest;
 import com.example.data.response.PostResponse;
 import com.example.data.response.UserResponse;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import com.hm.social.tables.pojos.Post;
+import com.hm.social.tables.pojos.Topic;
+import org.mapstruct.*;
 
-@Mapper(componentModel = "spring",uses = {UserMapper.class})
+@Mapper(componentModel = "spring", uses = {UserMapper.class})
 public interface PostMapper {
     @Mapping(ignore = true, target = "id")
     @Mapping(source = "title", target = "title")
     @Mapping(source = "content", target = "content")
-    @Mapping(source = "userOwnerId", target = "userOwnerId")
+    @Mapping(source = "userOwnerId", target = "userId")
     @Mapping(ignore = true, target = "createdAt")
     @Mapping(ignore = true, target = "updatedAt")
     @Mapping(ignore = true, target = "deletedAt")
-    @Mapping(ignore = true, target = "voteCount")
-    @Mapping(ignore = true, target = "commentCount")
-    @Mapping(source = "topicId", target = "topicRelatedId")
+    @Mapping(ignore = true, target = "question")
+    @Mapping(ignore = true, target = "numComment")
+    @Mapping(source = "topicId", target = "topicId")
     Post toEnity(PostRequest postRequest);
 
 
+    PostResponse toDTO(Post post, @Context Topic topic, @Context UserResponse userResponse);
 
-    @Mapping(target = "title", source = "post.title")
-    @Mapping(target = "content", source = "post.content")
-    @Mapping(target = "createdAt", source = "post.createdAt")
-    @Mapping(target = "updatedAt", source = "post.updatedAt")
-    @Mapping(target = "deletedAt", source = "post.deletedAt")
-    @Mapping(target = "numComment", source = "post.commentCount")
-    @Mapping(target = "topic", source = "topic.content")
-    @Mapping(target = "userResponse", source = "userResponse")
-    PostResponse toDTO(Post post, Topic topic, UserResponse userResponse);
+    PostResponse toResponse(Post post, @Context Topic topic, @Context UserResponse userResponse);
 
 
-
+    @AfterMapping
+    default void afterMapping(@MappingTarget PostResponse response,
+                              Post post,
+                              @Context Topic topic, @Context UserResponse userResponse) {
+        //
+        if (topic != null) {
+            response.setTopic(topic.getDesc());
+        }
+    }
 
 }

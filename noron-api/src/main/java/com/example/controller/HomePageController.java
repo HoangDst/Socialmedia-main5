@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import com.example.controller.model.HomePage;
+import com.example.config.model.HomePage;
 import com.example.data.response.PostResponse;
 import com.example.service.IHomePageService;
 import org.springframework.http.ResponseEntity;
