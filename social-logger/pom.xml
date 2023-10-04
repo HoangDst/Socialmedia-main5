@@ -5,12 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.network</groupId>
-        <artifactId>socialmedia</artifactId>
+        <artifactId>Socialmedia-main5</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 
     <groupId>com.example</groupId>
-    <artifactId>noron-logger</artifactId>
+    <artifactId>social-logger</artifactId>
 
     <properties>
         <maven.compiler.source>19</maven.compiler.source>
@@ -20,7 +20,7 @@
     <dependencies>
         <dependency>
             <groupId>com.example</groupId>
-            <artifactId>noron-config</artifactId>
+            <artifactId>social-config</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

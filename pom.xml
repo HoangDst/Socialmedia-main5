@@ -9,19 +9,18 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.network</groupId>
-    <artifactId>socialmedia</artifactId>
+    <artifactId>Socialmedia-main5</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>socialmedia</name>
+    <name>Socialmedia-main5</name>
     <description>socialmedia</description>
     <modules>
 
-        <module>noron-api</module>
+        <module>social-api</module>
         <module>common-data</module>
         <module>repository</module>
-        <module>noron-config</module>
-
-        <module>noron-logger</module>
+        <module>social-config</module>
+        <module>social-logger</module>
 
 
     </modules>
