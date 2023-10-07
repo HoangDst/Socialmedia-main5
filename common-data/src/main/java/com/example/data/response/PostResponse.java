@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 public class PostResponse {
     private String title;
     private String content;
-    private UserResponse userResponse; // bo
+    private UserResponse userResponse;
     private UserResponse user;
     private Integer numComment;
     private String topic;
